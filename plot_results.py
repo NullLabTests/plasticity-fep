@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 os.makedirs("results/figures", exist_ok=True)
 
+# ---- Fig 1-2: LR_syn vs Learnability ----
 with open("results/lr_syn_learnability.json") as f:
     data = json.load(f)
 
@@ -14,7 +15,6 @@ lr = np.array([r["lr_syn"] for r in data["results"]])
 acc = np.array([r["test_acc"] for r in data["results"]])
 scale = np.array([r["scale"] for r in data["results"]])
 
-# Fig 1: LR_syn vs test accuracy
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 ax1.scatter(np.log10(lr + 1e-12), acc, c=scale, cmap="viridis", alpha=0.8, s=30)
@@ -25,7 +25,6 @@ ax1.grid(alpha=0.3)
 cbar = plt.colorbar(ax1.collections[0], ax=ax1)
 cbar.set_label("Init Scale")
 
-# Median split bar chart
 median = np.median(lr)
 low = acc[lr < median]
 high = acc[lr >= median]
@@ -40,7 +39,6 @@ plt.tight_layout()
 plt.savefig("results/figures/lr_syn_vs_learnability.png", dpi=150)
 print("Saved results/figures/lr_syn_vs_learnability.png")
 
-# Fig 2: Training dynamics for extreme models
 fig, ax = plt.subplots(figsize=(8, 5))
 idx_low = np.argmin(lr)
 idx_high = np.argmax(lr)
@@ -54,3 +52,40 @@ ax.grid(alpha=0.3)
 plt.tight_layout()
 plt.savefig("results/figures/lr_syn_range.png", dpi=150)
 print("Saved results/figures/lr_syn_range.png")
+
+# ---- Fig 3: Grokking dynamics ----
+with open("results/grokking_results.json") as f:
+    grok_data = json.load(f)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+colors = {"wd=1.0": "steelblue", "wd=1.5": "coral"}
+markers = {0: "o", 1: "s"}
+
+for key, runs in grok_data.items():
+    wd = float(key.split("=")[1])
+    c = colors.get(key, "gray")
+    for si, run in enumerate(runs):
+        ep = run["epoch"]
+        te = run["test_acc"]
+        lr_syn = run["lr_syn"]
+        ge = run.get("grok_epoch")
+        label = f"wd={wd} (grok ep {ge})" if ge else f"wd={wd}"
+        ax1.plot(ep, te, label=label, color=c, alpha=0.7, linewidth=0.8)
+        ax2.plot(ep, lr_syn, label=label, color=c, alpha=0.7, linewidth=0.8)
+        if ge:
+            ax1.axvline(ge, color=c, linestyle=":", alpha=0.4)
+            ax2.axvline(ge, color=c, linestyle=":", alpha=0.4)
+
+ax1.set_xlabel("Epoch"); ax1.set_ylabel("Test Accuracy")
+ax1.set_title("Grokking Phase Transition")
+ax1.legend(fontsize=8); ax1.grid(alpha=0.3)
+ax1.set_ylim(-0.05, 1.05)
+
+ax2.set_xlabel("Epoch"); ax2.set_ylabel("LR_syn")
+ax2.set_title("LR_syn During Grokking")
+ax2.legend(fontsize=8); ax2.grid(alpha=0.3)
+
+plt.tight_layout()
+plt.savefig("results/figures/grokking_dynamics.png", dpi=150)
+print("Saved results/figures/grokking_dynamics.png")

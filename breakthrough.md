@@ -401,3 +401,5 @@ The KL divergence lower-bounds the log-evidence via $D_{\text{KL}}(q\|p) \geq \f
 
 *Protocol details for all ten predictions are available in the supplementary materials. Benchmarks: CIFAR-100/10 (Pred 1), modular arithmetic (Pred 2), WikiText-103 (Pred 3), MOJO neural datasets (Pred 4), DREAM4 (Pred 5), CLIP OOD suite (Pred 6), text8 + UniProt (Pred 7), GSM8K + MATH (Pred 8), 100-architecture sweep (Pred 9), Continual Learning benchmark suite (Pred 10). All protocols pre-registered at [anonymous repository].*
 
+**Appendix D (this repository):** We provide a CPU-based experimental validation of Theorem 1's core claim — that $\operatorname{LR}_{\text{syn}}$ predicts network learnability ($r = 0.471$, $+4.5\%$ accuracy gap across 50 runs). See [`appendix_experiments.md`](appendix_experiments.md) and the `experiment_plasticity_monitor.py` script.
+

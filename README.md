@@ -6,6 +6,16 @@
   <b>Authors:</b> Anonymous &nbsp;|&nbsp; <b>Venue:</b> Preprint, July 2026
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/status-preprint-lightgrey" alt="Status: Preprint"/>
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python 3.10+"/>
+  <img src="https://img.shields.io/badge/framework-PyTorch-ee4c2c" alt="PyTorch"/>
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT"/>
+  <img src="https://img.shields.io/badge/theorems-7-gold" alt="7 Theorems"/>
+  <img src="https://img.shields.io/badge/experiments-2 CPU-brightgreen" alt="2 CPU Experiments"/>
+  <img src="https://img.shields.io/badge/topics-10-informational" alt="10 Topics"/>
+</p>
+
 ---
 
 ## Overview

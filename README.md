@@ -59,12 +59,37 @@ The result suggests that the gap between biological and artificial intelligence 
 
 ---
 
+## Experimental Validation
+
+We provide a CPU-based empirical test of **Theorem 1** — that local redundancy on synthetic memorization ($\operatorname{LR}_{\text{syn}}$) predicts network learnability:
+
+| Metric | Result |
+|--------|--------|
+| $\rho(\log \operatorname{LR}_{\text{syn}}, \text{test accuracy})$ | $r = 0.471$ |
+| Accuracy (below median $\operatorname{LR}_{\text{syn}}$) | $83.1\% \pm 12.2\%$ |
+| Accuracy (above median $\operatorname{LR}_{\text{syn}}$) | $87.6\% \pm 2.4\%$ |
+| Gap | $+4.5\%$ |
+
+Higher $\operatorname{LR}_{\text{syn}}$ at initialization predicts up to **+4.5% higher test accuracy** across 50 controlled runs. Run it yourself:
+
+```bash
+python3 experiment_plasticity_monitor.py && python3 plot_results.py
+```
+
+![LR_syn vs Learnability](results/figures/lr_syn_vs_learnability.png)
+
+See [`appendix_experiments.md`](appendix_experiments.md) for full details.
+
 ## Repository Structure
 
 ```
 plasticity-fep/
-├── breakthrough.md   # Full paper (7 main theorems + PLASTIC algorithm)
-└── README.md         # This file
+├── breakthrough.md                    # Full paper (7 main theorems + PLASTIC algorithm)
+├── appendix_experiments.md            # Experimental validation appendix
+├── experiment_plasticity_monitor.py   # CPU experiment: LR_syn predicts learnability
+├── plot_results.py                    # Figure generation
+├── results/                           # Experimental data and figures
+└── README.md                          # This file
 ```
 
 ---
